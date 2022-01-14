@@ -10,16 +10,34 @@
                     <ul> 
                         <li class="head-dpdn">
                             <i class="fa fa-phone" aria-hidden="true"></i> Tel/Whatsapp: +55 (00) 00000-0000
-                        </li> 
-                        <li class="head-dpdn">
-                            <a href="{{ asset('/') }}FrontEndSourceFile/login.html"><i class="fa fa-sign-in" aria-hidden="true"></i> Entrar</a>
-                        </li> 
-                        <li class="head-dpdn">
-                            <a href="{{ route('cadastrar') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> Cadastrar</a>
-                        </li> 
+                        </li>
+                        
+                        @if (Session::get('id'))
+                            <li class="head-dpdn">
+                                <a href="#" onclick="document.getElementById('sair').submit();"><i class="fa fa-sign-in" aria-hidden="true"></i> Sair</a>
+                                <form action="{{ route('sair') }}" id="sair" method="post">
+                                    @csrf
+                                </form>
+                            </li>
+                        @else 
+                            <li class="head-dpdn">
+                                <a href="{{ route('entrar') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> Entrar</a>
+                            </li>
+                        @endif
+                        
+                        @if (Session::get('id'))
+                            <li class="head-dpdn">
+                                <a href="{{ route('cadastrar') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> {{ Session::get('name') }}</a>
+                            </li>
+                        @else
+                            <li class="head-dpdn">
+                                <a href="{{ route('cadastrar') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> Cadastrar</a>
+                            </li>
+                        @endif 
+
                         <li class="head-dpdn">
                             <a href="{{ asset('/') }}FrontEndSourceFile/offers.html"><i class="fa fa-gift" aria-hidden="true"></i> Promoções</a>
-                        </li> 
+                        </li>
                         <li class="head-dpdn">
                             <a href="{{ asset('/') }}FrontEndSourceFile/help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> Ajuda</a>
                         </li>
@@ -56,9 +74,8 @@
                         </ul>
                     </div>
                     <div class="cart cart box_1"> 
-                        <form action="#" method="post" class="last"> 
-                            <input type="hidden" name="cmd" value="_cart" />
-                            <input type="hidden" name="display" value="1" />
+                        <a href="{{ route('cart_show') }}"  class="last"> 
+                            
                             <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
                         </form>   
                     </div> 

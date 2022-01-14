@@ -8,6 +8,7 @@ use App\Models\shipping;
 use Mail;
 use Session;
 
+
 class CustomerController extends Controller
 {
     public function show(){
@@ -15,6 +16,7 @@ class CustomerController extends Controller
     }
 
     public function store(Request $request){
+
         $customer = new customer();
         $customer->name = $request->name;
         $customer->email = $request->email;
@@ -23,7 +25,8 @@ class CustomerController extends Controller
         $customer->save();
         
         $customer_id = $customer->id;
-        Session::put('id', $customer_id);
+        
+        Session::put('id', $customer->id);
         Session::put('name', $customer->name);
 
         /*$data = $customer->toArray();
@@ -42,7 +45,9 @@ class CustomerController extends Controller
     }
 
     public function save(Request $request){
+
         $shipping = new shipping();
+        
         $shipping->name = $request->name;
         $shipping->email = $request->email;
         $shipping->phone = $request->phone;
@@ -50,6 +55,35 @@ class CustomerController extends Controller
         $shipping->comment = $request->comment;
         $shipping->save();
 
-        dd('Até aqui tudo bem!');
+        $shipping_id = $shipping->id;
+        Session::put('name', $shipping->name);
+
+        return redirect()->route('pagamento');
+    }
+
+    public function login(){
+        return view('FrontEnd.customer.login');
+    }
+
+    public function check(Request $request){
+        $customer = customer::where('email', $request->email)->first();
+        
+        if(password_verify($request->password, $customer->password)){
+            Session::put('id', $customer->id);
+            Session::put('name', $customer->name);
+
+            return redirect('/shipping');
+        }
+        else{
+           
+            return redirec('/customer/login')->with('sms', 'Senha errada!');
+        }
+    }
+
+    public function logout(){
+        Session::forget('id');
+        Session::forget('name');
+
+        return redirect('/');
     }
 }

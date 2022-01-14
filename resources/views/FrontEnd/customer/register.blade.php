@@ -13,7 +13,7 @@ Cadastrar sua Conta
         <div class="container"> 
             <h3 class="w3ls-title w3ls-title1">Sign Up to your account</h3>  
             <div class="login-agileinfo"> 
-                <form action="{{ route('store_customer') }}" method="post">
+                <form action="{{ route('salvar_cadastro') }}" method="post">
                     @csrf
                     <input class="agile-ltext" type="text" name="name" placeholder="Digite seu nome..." required="">
                     <input class="agile-ltext" type="email" name="email" placeholder="Digite seu email..." required="">

@@ -62,17 +62,19 @@
                                 <input type="hidden" name="" value="">
                               </tr>
                               @endforeach
-                              <tr>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td class="text-center 1">{{ 'R$ '.number_format($sum, 2, ',', '.') }}</td>
-
-                              </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-center 1">{{ 'R$ '.number_format($sum, 2, ',', '.') }}</td>
+                                    <?php
+                                       Session::put('sum', $sum);
+                                    ?>
+                                </tr>
                             </tbody>
                           </table>
 
@@ -81,19 +83,35 @@
                 </div>
 
             </div>
-            {{--<div class="col-md-9 product-w3ls-right">
-                <a href="{{ route('finalizar_pedido') }}"  class="btn btn-info" style="float:right">
-                    <i class="fa fa-shopping-bag"></i>
-                    Enviar
-                </a>
-            </div>--}}
+            
+
+            @if (Session::get('customer_id' , 'shipping_id'))
+                <div class="col-md-9 product-w3ls-right">
+                    <a href="{{ url('/checkout/payment') }}"  class="btn btn-info" style="float:right">
+                        <i class="fa fa-shopping-bag"></i>
+                        Enviar
+                    </a>
+                </div>
+            
+                @elseif (Session::get('customer_id'))
 
             <div class="col-md-9 product-w3ls-right">
-                <a href="" data-toggle="modal" data-target="#login_or_register" class="btn btn-info" style="float:right">
+                <a href="{{ url('/shipping') }}"  class="btn btn-info" style="float:right">
                     <i class="fa fa-shopping-bag"></i>
                     Enviar
                 </a>
             </div>
+
+            @else
+                <div class="col-md-9 product-w3ls-right">
+                    <a href="" data-toggle="modal" data-target="#login_or_register" class="btn btn-info" style="float:right">
+                        <i class="fa fa-shopping-bag"></i>
+                        Enviar
+                    </a>
+                </div>
+            @endif
+
+            
 
         </div>
     </div>
@@ -136,7 +154,7 @@
                                 </a>
                                 <h3 class="mt-lg-5 text-center">Ou</h3>
                                 <h4 class="mt-5">já tem uma conta</h4>
-                                <a href="#" class="btn-block btn-success text-center" style="height: 60px; width: auto; padding-top: 12px; margin-top: 10px; font-size: 25px;">
+                                <a href="{{ route('entrar') }}" class="btn-block btn-success text-center" style="height: 60px; width: auto; padding-top: 12px; margin-top: 10px; font-size: 25px;">
                                     <span class="mt-5">Entrar</span>
                                 </a>
                             </div>

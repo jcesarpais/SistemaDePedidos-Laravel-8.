@@ -28,13 +28,18 @@ route::post('/cart/update', [App\Http\Controllers\CartController::class, 'update
 /*============================================================== Fim das rotas FrontEnd =============================================================*/
 
 /*============================================================== Inicio das rotas Checkout FrontEnd =============================================================*/
-route::get('/checkout/checkout', [App\Http\Controllers\checkoutController::class, 'checkout'])->name('finalizar_pedido');
+route::get('/checkout/payment', [App\Http\Controllers\checkoutController::class, 'payment'])->name('pagamento');
+route::post('/checkout/order', [App\Http\Controllers\checkoutController::class, 'order'])->name('ordem_pagamento');
 
 /*============================================================== Fim das rotas Checkout FrontEnd =============================================================*/
 
 /*============================================================== Inicio das rotas de Registro FrontEnd =============================================================*/
-Route::get('/register/customer', [App\Http\Controllers\CustomerController::class, 'show'])->name('cadastrar');
-Route::post('/register/customer/store', [App\Http\Controllers\CustomerController::class, 'store'])->name('store_customer');
+Route::get('/customer/register', [App\Http\Controllers\CustomerController::class, 'show'])->name('cadastrar');
+Route::post('/customer/register/store', [App\Http\Controllers\CustomerController::class, 'store'])->name('salvar_cadastro');
+Route::get('/customer/login/', [App\Http\Controllers\CustomerController::class, 'login'])->name('entrar');
+Route::post('/customer/logout/', [App\Http\Controllers\CustomerController::class, 'logout'])->name('sair');
+Route::post('/customer/check/login', [App\Http\Controllers\CustomerController::class, 'check'])->name('check_login');
+
 route::get('/shipping', [App\Http\Controllers\CustomerController::class, 'shipping'])->name('shipping');
 route::post('/shipping/store', [App\Http\Controllers\CustomerController::class, 'save'])->name('store_shipping');
 /*============================================================== Fim das rotas de Registro FrontEnd =============================================================*/
